@@ -24,7 +24,7 @@
 @end
 
 @implementation SoomlaGooglePlus {
-    BOOL _autoLogin;
+    NSNumber *_autoLogin;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, socialActionSuccess, socialActionFail, clientId;
@@ -49,10 +49,10 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
 - (void)applyParams:(NSDictionary *)providerParams{
     if (providerParams){
-        _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
+        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
         clientId = providerParams[@"clientId"];
     } else {
-        _autoLogin = NO;
+        _autoLogin = @NO;
     }
 }
 
@@ -74,7 +74,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 - (void)startGooglePlusAuth{
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     GPPShare *share = [GPPShare sharedInstance];
-    NSArray* scopes = @[kGTLAuthScopePlusLogin, kGTLAuthScopePlusUserinfoProfile];
+    NSArray* scopes = [NSArray arrayWithObjects:kGTLAuthScopePlusLogin,kGTLAuthScopePlusUserinfoProfile, nil];
     
     signIn.shouldFetchGoogleUserEmail = YES;
     signIn.shouldFetchGooglePlusUser = YES;
@@ -153,7 +153,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (BOOL)isAutoLogin {
-    return _autoLogin;
+    return [_autoLogin boolValue];
 }
 
 
@@ -334,7 +334,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
         }
     }
     
-    GTLPlusPersonEmailsItem *email = googleContact.emails[0];
+    GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
     UserProfile * profile =
     [[UserProfile alloc] initWithProvider:GOOGLE
                              andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]

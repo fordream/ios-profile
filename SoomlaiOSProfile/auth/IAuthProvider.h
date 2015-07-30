@@ -68,10 +68,6 @@ typedef void (^logoutFail)(NSString* message);
  */
 - (BOOL)isLoggedIn;
 
-/**
-* Return value of autoLogin setting of the provider.
-* @return value of autoLogin
-*/
 - (BOOL)isAutoLogin;
 
 /**

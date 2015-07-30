@@ -17,9 +17,11 @@
 #import <UIKit/UIKit.h>
 
 #import "STTwitterOS.h"
+#import "STTwitterOAuth.h"
 
 #import "SoomlaTwitter.h"
 #import "UserProfile.h"
+#import "UserProfileStorage.h"
 
 #import "SoomlaUtils.h"
 #import "KeyValueStorage.h"
@@ -44,7 +46,7 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 @end
 
 @implementation SoomlaTwitter {
-    BOOL _autoLogin;
+    NSNumber *_autoLogin;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -90,7 +92,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     
 
     if (providerParams) {
-        _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
+        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
         _consumerKey = providerParams[@"consumerKey"];
         _consumerSecret = providerParams[@"consumerSecret"];
         
@@ -98,7 +100,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
         NSNumber *forceWeb = providerParams[@"forceWeb"];
         webOnly = forceWeb ? [forceWeb boolValue] : NO;
     } else {
-        _autoLogin = NO;
+        _autoLogin = @NO;
         webOnly = NO;
     }
     
@@ -230,7 +232,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (void) applyOauthTokens:(NSString *)token andVerifier:(NSString *)verifier {
     if (!token || !verifier) {
-        self.loginCancel();
+        self.loginCancel([self getProvider]);
         return;
     }
     
@@ -271,7 +273,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (BOOL)isAutoLogin {
-    return _autoLogin;
+    return [_autoLogin boolValue];
 }
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -441,15 +443,15 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
               uploadProgressBlock:^(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
                   // nothing to do here
               } successBlock:^(NSDictionary *imageDictionary, NSString *mediaID, NSString *size) {
-                [self.twitter postStatusUpdate:message inReplyToStatusID:nil
-                                      mediaIDs:@[mediaID] latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil
-                                  successBlock:^(NSDictionary *status) {
-                                      LogDebug(TAG, ([NSString stringWithFormat:@"Upload image (status) success: %@", status]));
-                                      success();
-                                  } errorBlock:^(NSError *error) {
-                            LogError(TAG, ([NSString stringWithFormat:@"Upload image (status) error: %@", error]));
-                            fail([NSString stringWithFormat:@"%ld: %@", (long) error.code, error.localizedDescription]);
-                        }];
+                  [self.twitter postStatusUpdate:message inReplyToStatusID:nil
+                                        mediaIDs:[NSArray arrayWithObject:mediaID] latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil
+                                    successBlock:^(NSDictionary *status) {
+                                        LogDebug(TAG, ([NSString stringWithFormat:@"Upload image (status) success: %@", status]));
+                                        success();
+                                    } errorBlock:^(NSError *error) {
+                                        LogError(TAG, ([NSString stringWithFormat:@"Upload image (status) error: %@", error]));
+                                        fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+                                    }];
               } errorBlock:^(NSError *error) {
                   LogError(TAG, ([NSString stringWithFormat:@"Upload image error: %@", error]));
                   fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
@@ -471,14 +473,14 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
         // nothing to do here
     } successBlock:^(NSDictionary *imageDictionary, NSString *mediaID, NSString *size) {
         [self.twitter postStatusUpdate:message inReplyToStatusID:nil
-                              mediaIDs:@[mediaID] latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil
+                              mediaIDs:[NSArray arrayWithObject:mediaID] latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil
                           successBlock:^(NSDictionary *status) {
                               LogDebug(TAG, ([NSString stringWithFormat:@"Upload image (status) success: %@", status]));
                               success();
                           } errorBlock:^(NSError *error) {
-                    LogError(TAG, ([NSString stringWithFormat:@"Upload image (status) error: %@", error]));
-                    fail([NSString stringWithFormat:@"%ld: %@", (long) error.code, error.localizedDescription]);
-                }];
+                              LogError(TAG, ([NSString stringWithFormat:@"Upload image (status) error: %@", error]));
+                              fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+                          }];
     } errorBlock:^(NSError *error) {
         LogError(TAG, ([NSString stringWithFormat:@"Upload image error: %@", error]));
         fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
