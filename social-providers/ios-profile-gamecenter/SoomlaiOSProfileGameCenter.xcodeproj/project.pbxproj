@@ -10,6 +10,10 @@
 		444A8E131BF26E9600C9A991 /* SoomlaGameCenter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 444A8E121BF26E9600C9A991 /* SoomlaGameCenter.h */; };
 		444A8E151BF26E9600C9A991 /* SoomlaGameCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 444A8E141BF26E9600C9A991 /* SoomlaGameCenter.m */; };
 		44EAEEF81BF4AB9000231DDB /* SoomlaGameCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 444A8E121BF26E9600C9A991 /* SoomlaGameCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2FA81C74E2F0E3EFEF26AC8 /* Score+GameCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8D079DFD4891F2CEEE4E /* Score+GameCenter.m */; };
+		B2FA8553F461838838E290F9 /* Leaderboard+GameCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA88DC8B03DD4D987316B9 /* Leaderboard+GameCenter.h */; };
+		B2FA8A8EE55F1A9317768D05 /* Score+GameCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA8B0EDC70C1BECC6AE804 /* Score+GameCenter.h */; };
+		B2FA8DD539A92DFE1FBA918F /* Leaderboard+GameCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8BED7CC324B6CFD6AFA1 /* Leaderboard+GameCenter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +33,10 @@
 		444A8E0F1BF26E9600C9A991 /* libSoomlaiOSProfileGameCenter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileGameCenter.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		444A8E121BF26E9600C9A991 /* SoomlaGameCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaGameCenter.h; sourceTree = "<group>"; };
 		444A8E141BF26E9600C9A991 /* SoomlaGameCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoomlaGameCenter.m; sourceTree = "<group>"; };
+		B2FA88DC8B03DD4D987316B9 /* Leaderboard+GameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Leaderboard+GameCenter.h"; sourceTree = "<group>"; };
+		B2FA8B0EDC70C1BECC6AE804 /* Score+GameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Score+GameCenter.h"; sourceTree = "<group>"; };
+		B2FA8BED7CC324B6CFD6AFA1 /* Leaderboard+GameCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Leaderboard+GameCenter.m"; sourceTree = "<group>"; };
+		B2FA8D079DFD4891F2CEEE4E /* Score+GameCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Score+GameCenter.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +71,10 @@
 			children = (
 				444A8E121BF26E9600C9A991 /* SoomlaGameCenter.h */,
 				444A8E141BF26E9600C9A991 /* SoomlaGameCenter.m */,
+				B2FA88DC8B03DD4D987316B9 /* Leaderboard+GameCenter.h */,
+				B2FA8BED7CC324B6CFD6AFA1 /* Leaderboard+GameCenter.m */,
+				B2FA8D079DFD4891F2CEEE4E /* Score+GameCenter.m */,
+				B2FA8B0EDC70C1BECC6AE804 /* Score+GameCenter.h */,
 			);
 			path = SoomlaiOSProfileGameCenter;
 			sourceTree = "<group>";
@@ -75,6 +87,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				44EAEEF81BF4AB9000231DDB /* SoomlaGameCenter.h in Headers */,
+				B2FA8553F461838838E290F9 /* Leaderboard+GameCenter.h in Headers */,
+				B2FA8A8EE55F1A9317768D05 /* Score+GameCenter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +167,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				444A8E151BF26E9600C9A991 /* SoomlaGameCenter.m in Sources */,
+				B2FA8DD539A92DFE1FBA918F /* Leaderboard+GameCenter.m in Sources */,
+				B2FA81C74E2F0E3EFEF26AC8 /* Score+GameCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

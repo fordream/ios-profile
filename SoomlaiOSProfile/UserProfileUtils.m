@@ -32,7 +32,7 @@
         case TWITTER:
             return @"twitter";
         case GAME_CENTER:
-            return @"gameСenter";
+            return @"gameCenter";
         default:
             [NSException raise:NSGenericException format:@"Unexpected FormatType."];
     }

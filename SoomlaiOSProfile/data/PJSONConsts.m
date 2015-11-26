@@ -28,3 +28,9 @@ NSString *const UP_GENDER           = @"gender";
 NSString *const UP_LANGUAGE         = @"language";
 NSString *const UP_BIRTHDAY         = @"birthday";
 NSString *const UP_EXTRA            = @"extra";
+
+NSString *const UP_IDENTIFIER       = @"identifier";
+NSString *const UP_USER_PROFILE     = @"userProfile";
+NSString *const UP_LEADERBOARD      = @"leaderboard";
+NSString *const UP_SCORE_VALUE      = @"scoreValue";
+NSString *const UP_SCORE_RANK       = @"scoreRank";

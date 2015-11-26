@@ -15,20 +15,20 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "ISocialProvider.h"
+#import <GameKit/GameKit.h>
+#import "IGameServicesProvider.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
-/**
- This class creates a plugin for *ios-profile* using Twitter as its social provider
- With this plugin, you can use our pre-cooked social actions (login, share status etc.)
- already integrated with Twitter, and tie them to rewards.  Use this plugin when you want
- to reward your users with coins (or any other virtual items) in exchange
- for social actions they perform.
- */
-@interface SoomlaGameCenter : NSObject <ISocialProvider> {
+
+@interface SoomlaGameCenter : NSObject <IGameServicesProvider> {
     
 }
+
+/**
+ Constructs SOOMLA profile from Gamekit profile
+ */
++(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player;
 
 @end
 

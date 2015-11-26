@@ -16,11 +16,16 @@
 
 #import "SoomlaGameCenter.h"
 #import "UserProfile.h"
-#import <GameKit/GameKit.h>
+#import "Leaderboard+GameCenter.h"
+#import "Score+GameCenter.h"
 
 @implementation SoomlaGameCenter {
     BOOL _autoLogin;
+
+    NSMutableDictionary *_scoresOffsets;
 }
+
+const NSUInteger DEFAULT_OFFSET = 25;
 
 const Provider currentProvider = GAME_CENTER;
 
@@ -35,6 +40,8 @@ const Provider currentProvider = GAME_CENTER;
     } else {
         _autoLogin = NO;
     }
+
+    _scoresOffsets = [NSMutableDictionary new];
 }
 
 /**
@@ -44,6 +51,9 @@ const Provider currentProvider = GAME_CENTER;
 - (Provider)getProvider {
     return currentProvider;
 }
+
+
+#pragma mark IGameServicesProvider methods
 
 /**
  Logs in with the authentication provider
@@ -90,7 +100,7 @@ const Provider currentProvider = GAME_CENTER;
         [GKPlayer loadPlayersForIdentifiers:@[playerId] withCompletionHandler:^(NSArray *players, NSError *error) {
             if (players.count) {
                 if (success != nil) {
-                    success([self userProfileFromGameKitPlayer:((GKPlayer *)players[0])]);
+                    success([[self class] userProfileFromGameKitPlayer:((GKPlayer *)players[0])]);
                 }
             } else {
                 if (fail != nil) {
@@ -105,9 +115,16 @@ const Provider currentProvider = GAME_CENTER;
     }
 }
 
--(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player {
-    NSString *firstName = [[player.displayName componentsSeparatedByString:@" "] firstObject];
-    NSString *lastName = [[player.displayName componentsSeparatedByString:@" "] lastObject];
++(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player {
+    NSString *firstName = nil;
+    NSString *lastName = nil;
+    if ([player.displayName componentsSeparatedByString:@" "].count == 2) {
+        firstName = [[player.displayName componentsSeparatedByString:@" "] firstObject];
+        lastName = [[player.displayName componentsSeparatedByString:@" "] lastObject];
+    } else if ([player.alias componentsSeparatedByString:@" "].count == 2) {
+        firstName = [[player.alias componentsSeparatedByString:@" "] firstObject];
+        lastName = [[player.alias componentsSeparatedByString:@" "] lastObject];
+    }
     return [[UserProfile alloc] initWithProvider:currentProvider andProfileId:player.playerID andUsername:player.alias
                                         andEmail:@"" andFirstName:(firstName ? firstName : @"")
                                      andLastName:(lastName ? lastName : @"") andExtra:nil];
@@ -159,77 +176,7 @@ const Provider currentProvider = GAME_CENTER;
     return NO;
 }
 
-/**
- Shares the given status to the user's feed
-
- @param status the text to share
- @param success a status update success callback
- @param fail a status update failure callback
- */
-- (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support status updating.");
-}
-
-/**
- Shares the given status and link to the user's feed using the provider's
- native dialog (when available)
-
- @param link the link to share (could be nil when not needed)
- @param success a status update success callback
- @param fail a status update failure callback
- */
-- (void)updateStatusWithProviderDialog:(NSString *)link success:(socialActionSuccess)success fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support status updating.");
-}
-
-/**
- Share a story to the user's feed.  This is very oriented for Facebook.
-
- @param message The main text which will appear in the story
- @param name The headline for the link which will be integrated in the
- story
- @param caption The sub-headline for the link which will be
- integrated in the story
- @param description The description for the link which will be
- integrated in the story
- @param link The link which will be integrated into the user's story
- @param picture a Link to a picture which will be featured in the link
- @param socialActionListener an update story failure callback
- */
-- (void)updateStoryWithMessage:(NSString *)message
-                       andName:(NSString *)name
-                    andCaption:(NSString *)caption
-                andDescription:(NSString *)description
-                       andLink:(NSString *)link
-                    andPicture:(NSString *)picture
-                       success:(socialActionSuccess)success
-                          fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support story updating.");
-}
-
-/**
- Share a story to the user's feed.  This is very oriented for Facebook.
- Using the provider's native dialog (when available)
-
- @param name The headline for the link which will be integrated in the
- story
- @param caption The sub-headline for the link which will be
- integrated in the story
- @param description The description for the link which will be
- integrated in the story
- @param link The link which will be integrated into the user's story
- @param picture a Link to a picture which will be featured in the link
- @param socialActionListener an update story failure callback
- */
-- (void)updateStoryWithMessageDialog:(NSString *)name
-                          andCaption:(NSString *)caption
-                      andDescription:(NSString *)description
-                             andLink:(NSString *)link
-                          andPicture:(NSString *)picture
-                             success:(socialActionSuccess)success
-                                fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support story updating.");
-}
+#pragma mark IGameServicesProvider methods
 
 /**
  Fetches the user's contact list
@@ -238,12 +185,12 @@ const Provider currentProvider = GAME_CENTER;
  @param success a contacts fetch success callback
  @param fail a contacts fetch failure callback
  */
-- (void)getContacts:(bool)fromStart success:(contactsActionSuccess)success fail:(contactsActionFail)fail {
+-(void)getContacts:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail {
     [[GKLocalPlayer localPlayer] loadFriendPlayersWithCompletionHandler:^(NSArray *friendPlayers, NSError *error) {
         if (error == nil) {
             NSMutableArray *result = [NSMutableArray new];
             for (GKPlayer *player in friendPlayers) {
-                UserProfile *parsedProfile = [self userProfileFromGameKitPlayer:player];
+                UserProfile *parsedProfile = [[self class] userProfileFromGameKitPlayer:player];
                 if (parsedProfile) {
                     [result addObject:parsedProfile];
                 }
@@ -256,68 +203,97 @@ const Provider currentProvider = GAME_CENTER;
 }
 
 /**
- Fetches the user's feed
+ Fetches the game's leaderboards list
 
- @param success a contacts fetch success callback
- @param fail a contacts fetch failure callback
+ @param success a leaderboards fetch success callback
+ @param fail a leaderboards fetch failure callback
  */
-- (void)getFeed:(bool)fromStart success:(feedsActionSuccess)success fail:(feedsActionFail)fail {
-    fail(@"GameCenter doesn't support feed.");
-}
-
-
-/**
- Sends an invite
-
- @param success a invite success callback
- @param fail a invite failure callback
- @param cancel a invite cancel callback
- */
-- (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
-          fail:(inviteFail)fail cancel:(inviteCancel)cancel {
-    fail(@"GameCenter doesn't support invitations.");
-}
-
-/**
- Shares a photo to the user's feed
-
- @param message A text that will accompany the image
- @param filePath The desired image's location on the device
- @param success an upload image success callback
- @param fail an upload image failure callback
- */
-- (void)uploadImageWithMessage:(NSString *)message
-                   andFilePath:(NSString *)filePath
-                       success:(socialActionSuccess)success
-                          fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support image uploading.");
+-(void)getLeaderboardsWithSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
+    [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
+        if (error == nil) {
+            NSMutableArray *result = [NSMutableArray new];
+            for (GKLeaderboard *leaderboard in leaderboards) {
+                Leaderboard *ourLeaderboard = [[Leaderboard alloc] initWithGamecenterLeaderboard:leaderboard];
+                if (ourLeaderboard) {
+                    [result addObject:ourLeaderboard];
+                }
+            }
+            success(result, NO);
+        } else {
+            fail(error.localizedDescription);
+        }
+    }];
 }
 
 /**
- Shares a photo to the user's feed using image data
+ Fetches the game's scores list from specified leaderboard
 
- @param message A text that will accompany the image
- @param fileName The desired image's location on the device
- @param imageData The desierd image's data
- @param success an upload image success callback
- @param fail an upload image failure callback
+ @param leaderboardId Leaderboard containing desired scores list
+ @param fromStart Should we reset pagination or request the next page
+ @param success a scores fetch success callback
+ @param fail a scores fetch failure callback
  */
-- (void)uploadImageWithMessage:(NSString *)message
-              andImageFileName: (NSString *)fileName
-                  andImageData: (NSData *)imageData
-                       success:(socialActionSuccess)success
-                          fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support image uploading.");
+-(void)getScoresFromLeaderboard:(NSString *)leaderboardId fromStart:(BOOL)fromStart withSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
+    [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
+        if (error == nil) {
+            GKLeaderboard *currentLeaderboard = nil;
+            for (GKLeaderboard *lb in leaderboards) {
+                if ([lb.identifier isEqualToString:leaderboardId]) {
+                    currentLeaderboard = lb;
+                    break;
+                }
+            }
+            if (currentLeaderboard) {
+                if (!_scoresOffsets[leaderboardId] || fromStart) {
+                    _scoresOffsets[leaderboardId] = @1;
+                }
+                currentLeaderboard.range = NSMakeRange([_scoresOffsets[leaderboardId] unsignedIntegerValue], DEFAULT_OFFSET);
+                [currentLeaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+                    if (error == nil) {
+                        NSMutableArray *result = [NSMutableArray new];
+                        for (GKScore *score in scores) {
+                            Score *ourScore = [[Score alloc] initWithGamecenterScore:score];
+                            if (ourScore) {
+                                [result addObject:ourScore];
+                            }
+                        }
+                        if (result.count == DEFAULT_OFFSET) {
+                            _scoresOffsets[leaderboardId] = @([_scoresOffsets[leaderboardId] unsignedIntegerValue] + DEFAULT_OFFSET);
+                        }
+                        success(result, result.count == DEFAULT_OFFSET);
+                    } else {
+                        fail(error.localizedDescription);
+                    }
+                }];
+            } else {
+                fail(@"Leaderboard with specified identifier not found.");
+            }
+        } else {
+            fail(error.localizedDescription);
+        }
+    }];
 }
 
 /**
- Opens up a page to like for the user (external)
+ Reports scores for specified leaderboard
 
- @param pageId The page to open on the provider
- @param reward The reward to grant when page is liked
+ @param score Value to report
+ @param leaderboardId Target leaderboard
+ @param success a score report success callback
+ @param fail a score report failure callback
  */
-- (void)like:(NSString *)pageId {
-    NSLog(@"GameCenter doesn't support page liking.");
+-(void)reportScore:(NSNumber *)score forLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
+    GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardId];
+    newScore.value = score.longLongValue;
+    newScore.context = 0;
+
+    [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
+        if (error == nil) {
+            success([[Score alloc] initWithGamecenterScore:newScore]);
+        } else {
+            fail(error.localizedDescription);
+        }
+    }];
 }
 
 @end

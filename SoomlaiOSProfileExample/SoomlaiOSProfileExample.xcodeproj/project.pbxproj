@@ -17,6 +17,10 @@
 		328450C71A0F99C1006E0E95 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328450C61A0F99C1006E0E95 /* CoreText.framework */; };
 		328450C91A0F99C9006E0E95 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328450C81A0F99C9006E0E95 /* MediaPlayer.framework */; };
 		3A4D84F3196371740030C5D5 /* libSoomlaiOSProfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF01CEA1960C98D0088836B /* libSoomlaiOSProfile.a */; };
+		448E9BB91BFE1B2B0079DD63 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 448E9BB51BFE1B2A0079DD63 /* FacebookSDK.framework */; };
+		448E9BBA1BFE1B2B0079DD63 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 448E9BB61BFE1B2A0079DD63 /* FacebookSDKStrings.bundle */; };
+		448E9BBB1BFE1B2B0079DD63 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 448E9BB71BFE1B2A0079DD63 /* FBSDKCoreKit.framework */; };
+		448E9BBC1BFE1B2B0079DD63 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 448E9BB81BFE1B2B0079DD63 /* FBSDKShareKit.framework */; };
 		C0443EC71A2798BE004C0E5F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0443EC61A2798BE004C0E5F /* AdSupport.framework */; };
 		C0443EC91A279A17004C0E5F /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0443EC81A279A17004C0E5F /* libSoomlaiOSCore.a */; };
 		EF83619019472A23003526D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF83618F19472A23003526D7 /* Foundation.framework */; };
@@ -32,8 +36,6 @@
 		EF8361EF19473D52003526D7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361EE19473D52003526D7 /* Security.framework */; };
 		EF8361F119473D57003526D7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361F019473D57003526D7 /* StoreKit.framework */; };
 		EF8361F319473D68003526D7 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361F219473D68003526D7 /* libsqlite3.0.dylib */; };
-		EFC127791948B09000CDA66B /* MuffinRushAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC127781948B09000CDA66B /* MuffinRushAssets.m */; };
-		EFC127C1194C2F6300CDA66B /* libSoomlaiOSStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361E719473C8A003526D7 /* libSoomlaiOSStore.a */; };
 		F842F7D01A0930B400CDCA7C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842F6A11A09091F00CDCA7C /* Accounts.framework */; };
 		F842F7D11A0930B800CDCA7C /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D278A11A0775E10058C109 /* Twitter.framework */; };
 		F842F7D21A0930C300CDCA7C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842F6A41A09093100CDCA7C /* Social.framework */; };
@@ -55,19 +57,12 @@
 			remoteGlobalIDString = EF356EFA193C90560081DCE0;
 			remoteInfo = SoomlaiOSProfile;
 		};
-		EF8361E619473C8A003526D7 /* PBXContainerItemProxy */ = {
+		448E9BB31BFE1A6C0079DD63 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */;
+			containerPortal = 448E9BAF1BFE1A6C0079DD63 /* SoomlaiOSCore.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C02CEC42160DC870000AA0D2;
-			remoteInfo = SoomlaiOSStore;
-		};
-		EFC127BF194C2F5D00CDA66B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C02CEC41160DC870000AA0D2;
-			remoteInfo = SoomlaiOSStore;
+			remoteGlobalIDString = C0B3C5EF168C6D0C00161FAA;
+			remoteInfo = SoomlaiOSCore;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -83,6 +78,11 @@
 		328450C81A0F99C9006E0E95 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		328450CA1A0F99D5006E0E95 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSProfile.xcodeproj; path = ../SoomlaiOSProfile.xcodeproj; sourceTree = "<group>"; };
+		448E9BAF1BFE1A6C0079DD63 /* SoomlaiOSCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSCore.xcodeproj; path = "../submodules/soomla-ios-core/SoomlaiOSCore.xcodeproj"; sourceTree = "<group>"; };
+		448E9BB51BFE1B2A0079DD63 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		448E9BB61BFE1B2A0079DD63 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
+		448E9BB71BFE1B2A0079DD63 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		448E9BB81BFE1B2B0079DD63 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		C0443EC61A2798BE004C0E5F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		C0443EC81A279A17004C0E5F /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-hgqjbzjccesicgbhsfwwashvohwm/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
 		EF83618C19472A23003526D7 /* SoomlaiOSProfileExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoomlaiOSProfileExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,12 +101,9 @@
 		EF8361A819472A23003526D7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		EF8361AA19472A23003526D7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EF8361B119472A23003526D7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSStore.xcodeproj; path = "../../ios-store/SoomlaiOSStore.xcodeproj"; sourceTree = "<group>"; };
 		EF8361EE19473D52003526D7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		EF8361F019473D57003526D7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		EF8361F219473D68003526D7 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		EFC127771948B09000CDA66B /* MuffinRushAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MuffinRushAssets.h; path = "../../../ios-store/SoomlaiOSStoreExample/SoomlaiOSStoreExample/MuffinRushAssets.h"; sourceTree = "<group>"; };
-		EFC127781948B09000CDA66B /* MuffinRushAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MuffinRushAssets.m; path = "../../../ios-store/SoomlaiOSStoreExample/SoomlaiOSStoreExample/MuffinRushAssets.m"; sourceTree = "<group>"; };
 		F842F6A11A09091F00CDCA7C /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F842F6A41A09093100CDCA7C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F85EFA4B19FFC832006092AB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../social-providers/ios-profile-facebook/libs/FacebookSDK.framework"; sourceTree = "<group>"; };
@@ -128,18 +125,20 @@
 				328450C51A0F99B2006E0E95 /* CoreMotion.framework in Frameworks */,
 				328450C31A0F99A9006E0E95 /* CoreLocation.framework in Frameworks */,
 				328450C11A0F99A2006E0E95 /* AssetsLibrary.framework in Frameworks */,
+				448E9BBC1BFE1B2B0079DD63 /* FBSDKShareKit.framework in Frameworks */,
 				328450BF1A0F999C006E0E95 /* AddressBook.framework in Frameworks */,
 				F842F7D21A0930C300CDCA7C /* Social.framework in Frameworks */,
 				F842F7D11A0930B800CDCA7C /* Twitter.framework in Frameworks */,
 				F842F7D01A0930B400CDCA7C /* Accounts.framework in Frameworks */,
 				3A4D84F3196371740030C5D5 /* libSoomlaiOSProfile.a in Frameworks */,
-				EFC127C1194C2F6300CDA66B /* libSoomlaiOSStore.a in Frameworks */,
 				EF8361F319473D68003526D7 /* libsqlite3.0.dylib in Frameworks */,
 				EF8361F119473D57003526D7 /* StoreKit.framework in Frameworks */,
 				EF8361EF19473D52003526D7 /* Security.framework in Frameworks */,
 				328450BB1A0F998E006E0E95 /* GoogleOpenSource.framework in Frameworks */,
 				328450BD1A0F998E006E0E95 /* GooglePlus.framework in Frameworks */,
 				EF83619419472A23003526D7 /* UIKit.framework in Frameworks */,
+				448E9BB91BFE1B2B0079DD63 /* FacebookSDK.framework in Frameworks */,
+				448E9BBB1BFE1B2B0079DD63 /* FBSDKCoreKit.framework in Frameworks */,
 				EF83619019472A23003526D7 /* Foundation.framework in Frameworks */,
 				F85EFA4C19FFC832006092AB /* FacebookSDK.framework in Frameworks */,
 			);
@@ -156,11 +155,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		448E9BB01BFE1A6C0079DD63 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				448E9BB41BFE1A6C0079DD63 /* libSoomlaiOSCore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		EF83618319472A23003526D7 = {
 			isa = PBXGroup;
 			children = (
+				448E9BB51BFE1B2A0079DD63 /* FacebookSDK.framework */,
+				448E9BB61BFE1B2A0079DD63 /* FacebookSDKStrings.bundle */,
+				448E9BB71BFE1B2A0079DD63 /* FBSDKCoreKit.framework */,
+				448E9BB81BFE1B2B0079DD63 /* FBSDKShareKit.framework */,
+				448E9BAF1BFE1A6C0079DD63 /* SoomlaiOSCore.xcodeproj */,
 				3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */,
-				EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */,
 				EF83619519472A23003526D7 /* SoomlaiOSProfileExample */,
 				EF83618E19472A23003526D7 /* Frameworks */,
 				EF83618D19472A23003526D7 /* Products */,
@@ -210,8 +221,6 @@
 		EF83619519472A23003526D7 /* SoomlaiOSProfileExample */ = {
 			isa = PBXGroup;
 			children = (
-				EFC127771948B09000CDA66B /* MuffinRushAssets.h */,
-				EFC127781948B09000CDA66B /* MuffinRushAssets.m */,
 				EF83619E19472A23003526D7 /* AppDelegate.h */,
 				EF83619F19472A23003526D7 /* AppDelegate.m */,
 				EF8361A119472A23003526D7 /* Main_iPhone.storyboard */,
@@ -235,14 +244,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		EF8361E319473C8A003526D7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				EF8361E719473C8A003526D7 /* libSoomlaiOSStore.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -258,7 +259,6 @@
 			);
 			dependencies = (
 				3A4D84EF1961BE460030C5D5 /* PBXTargetDependency */,
-				EFC127C0194C2F5D00CDA66B /* PBXTargetDependency */,
 			);
 			name = SoomlaiOSProfileExample;
 			productName = SoomlaiOSProfileExample;
@@ -287,12 +287,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3AF01CE51960C98D0088836B /* Products */;
-					ProjectRef = 3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */;
+					ProductGroup = 448E9BB01BFE1A6C0079DD63 /* Products */;
+					ProjectRef = 448E9BAF1BFE1A6C0079DD63 /* SoomlaiOSCore.xcodeproj */;
 				},
 				{
-					ProductGroup = EF8361E319473C8A003526D7 /* Products */;
-					ProjectRef = EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */;
+					ProductGroup = 3AF01CE51960C98D0088836B /* Products */;
+					ProjectRef = 3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -310,11 +310,11 @@
 			remoteRef = 3AF01CE91960C98D0088836B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		EF8361E719473C8A003526D7 /* libSoomlaiOSStore.a */ = {
+		448E9BB41BFE1A6C0079DD63 /* libSoomlaiOSCore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libSoomlaiOSStore.a;
-			remoteRef = EF8361E619473C8A003526D7 /* PBXContainerItemProxy */;
+			path = libSoomlaiOSCore.a;
+			remoteRef = 448E9BB31BFE1A6C0079DD63 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -327,6 +327,7 @@
 				EF8361A619472A23003526D7 /* Main_iPad.storyboard in Resources */,
 				328450BC1A0F998E006E0E95 /* GooglePlus.bundle in Resources */,
 				EF8361AB19472A23003526D7 /* Images.xcassets in Resources */,
+				448E9BBA1BFE1B2B0079DD63 /* FacebookSDKStrings.bundle in Resources */,
 				EF8361A319472A23003526D7 /* Main_iPhone.storyboard in Resources */,
 				EF83619A19472A23003526D7 /* InfoPlist.strings in Resources */,
 			);
@@ -340,7 +341,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF8361A919472A23003526D7 /* ViewController.m in Sources */,
-				EFC127791948B09000CDA66B /* MuffinRushAssets.m in Sources */,
 				EF8361A019472A23003526D7 /* AppDelegate.m in Sources */,
 				EF83619C19472A23003526D7 /* main.m in Sources */,
 			);
@@ -353,11 +353,6 @@
 			isa = PBXTargetDependency;
 			name = SoomlaiOSProfile;
 			targetProxy = 3A4D84EE1961BE460030C5D5 /* PBXContainerItemProxy */;
-		};
-		EFC127C0194C2F5D00CDA66B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SoomlaiOSStore;
-			targetProxy = EFC127BF194C2F5D00CDA66B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -479,10 +474,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../social-providers/ios-profile-facebook/libs",
 					"$(SRCROOT)/../social-providers/ios-profile-google/libs",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";
@@ -493,7 +491,13 @@
 					"../SoomlaiOSProfile/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../build/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../build/**",
+					"$(SRCROOT)/../build/ios-profile-facebook",
+					"$(SRCROOT)/../build/ios-profile-twitter",
+					"$(SRCROOT)/../build/ios-profile-google",
+					"$(SRCROOT)/../build/ios-profile-gamecenter",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -501,9 +505,12 @@
 					"-lSTTwitter",
 					"-lSoomlaiOSProfileGoogle",
 					"-lSoomlaiOSProfileTwitter",
+					"-lSoomlaiOSProfileGameCenter",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/ios-profile-gamecenter\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -514,10 +521,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../social-providers/ios-profile-facebook/libs",
 					"$(SRCROOT)/../social-providers/ios-profile-google/libs",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";
@@ -528,7 +538,13 @@
 					"../SoomlaiOSProfile/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../build/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../build/**",
+					"$(SRCROOT)/../build/ios-profile-facebook",
+					"$(SRCROOT)/../build/ios-profile-twitter",
+					"$(SRCROOT)/../build/ios-profile-google",
+					"$(SRCROOT)/../build/ios-profile-gamecenter",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -536,9 +552,12 @@
 					"-lSTTwitter",
 					"-lSoomlaiOSProfileGoogle",
 					"-lSoomlaiOSProfileTwitter",
+					"-lSoomlaiOSProfileGameCenter",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/ios-profile-gamecenter\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

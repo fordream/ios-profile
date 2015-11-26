@@ -19,9 +19,7 @@
 #import "SoomlaProfile.h"
 #import "ProfileEventHandling.h"
 #import "SoomlaEventHandling.h"
-#import "StoreEventHandling.h"
 #import "SoomlaUtils.h"
-#import "VirtualItemReward.h" // to avoid "incompatible type" warnings
 #import "UserProfile.h"
 
 
@@ -42,7 +40,6 @@ BOOL isLoginState = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginFailed:) name:EVENT_UP_LOGIN_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginCancelled:) name:EVENT_UP_LOGIN_CANCELLED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logoutFinished:) name:EVENT_UP_LOGOUT_FINISHED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currencyBalanceChanged:) name:EVENT_CURRENCY_BALANCE_CHANGED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getContactsFinished:) name:EVENT_UP_GET_CONTACTS_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getContactsFailed:) name:EVENT_UP_GET_CONTACTS_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFinished:) name:EVENT_UP_GET_FEED_FINISHED object:nil];
@@ -93,7 +90,7 @@ BOOL isLoginState = YES;
     // Retrieve the app delegate
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
-    [[SoomlaProfile getInstance] loginWithProvider:TARGET_PROVIDER andPayload:@"" andReward:appDelegate.loginReward];
+    [[SoomlaProfile getInstance] loginWithProvider:TARGET_PROVIDER andPayload:@"" andReward:nil];
 }
 
 - (IBAction)backTouched:(id)sender {
@@ -105,7 +102,7 @@ BOOL isLoginState = YES;
     // Retrieve the app delegate
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
-    [[SoomlaProfile getInstance] updateStatusWithProvider:TARGET_PROVIDER andStatus:@"Test status" andReward:appDelegate.updateStatusReward];
+    [[SoomlaProfile getInstance] updateStatusWithProvider:TARGET_PROVIDER andStatus:@"Test status" andReward:nil];
 
     // Or with dialog
     //[[SoomlaProfile getInstance] updateStatusWithProviderDialog:TARGET_PROVIDER andLink:@"http://www.soom.la" andPayload:@"status" andReward:appDelegate.updateStatusReward];
@@ -123,7 +120,7 @@ BOOL isLoginState = YES;
                                           andDescription:@"Description"
                                                  andLink:@"https://developers.facebook.com/docs/ios/share/"
                                               andPicture:@"http://i.imgur.com/g3Qc1HN.png"
-                                               andReward:appDelegate.updateStatusReward];
+                                               andReward:nil];
     // Or with dialog
     // [[SoomlaProfile getInstance] updateStoryWithProviderDialog:TARGET_PROVIDER
     //                                             andName:@"Name"
@@ -205,7 +202,7 @@ BOOL isLoginState = YES;
 }
 
 - (void)getContactsFailed:(NSNotification*)notification {
-    NSLog(@"%@ Faild: %@", notification.userInfo[DICT_ELEMENT_SOCIAL_ACTION_TYPE], notification.userInfo[DICT_ELEMENT_MESSAGE]);
+    NSLog(@"%@ Failed: %@", notification.userInfo[DICT_ELEMENT_SOCIAL_ACTION_TYPE], notification.userInfo[DICT_ELEMENT_MESSAGE]);
 }
 
 - (void)getFeedFinished:(NSNotification*)notification {
@@ -253,7 +250,7 @@ BOOL isLoginState = YES;
     [myData writeToFile:filePath atomically:YES];
 
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [[SoomlaProfile getInstance] uploadImageWithProvider:TARGET_PROVIDER andMessage:@"Text photo message" andFilePath:filePath andReward:appDelegate.uploadImageReward];
+    [[SoomlaProfile getInstance] uploadImageWithProvider:TARGET_PROVIDER andMessage:@"Text photo message" andFilePath:filePath andReward:nil];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }

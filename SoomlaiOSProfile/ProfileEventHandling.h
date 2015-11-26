@@ -19,6 +19,8 @@
 
 @class UserProfile;
 @class Reward;
+@class Leaderboard;
+@class Score;
 
 // Events
 #define EVENT_UP_PROFILE_INITIALIZED            @"up_profile_initialized"
@@ -54,6 +56,17 @@
 #define EVENT_UP_INVITE_CANCELLED               @"up_invite_cancelled"
 #define EVENT_UP_INVITE_FAILED                  @"up_invite_failed"
 
+#define EVENT_UP_GET_LEADERBOARDS_STARTED       @"up_get_leaderboards_started"
+#define EVENT_UP_GET_LEADERBOARDS_FINISHED      @"up_get_leaderboards_finished"
+#define EVENT_UP_GET_LEADERBOARDS_FAILED        @"up_get_leaderboards_failed"
+
+#define EVENT_UP_GET_SCORES_STARTED             @"up_get_scores_started"
+#define EVENT_UP_GET_SCORES_FINISHED            @"up_get_scores_finished"
+#define EVENT_UP_GET_SCORES_FAILED              @"up_get_scores_failed"
+
+#define EVENT_UP_REPORT_SCORE_STARTED           @"up_report_score_started"
+#define EVENT_UP_REPORT_SCORE_FINISHED          @"up_report_score_finished"
+#define EVENT_UP_REPORT_SCORE_FAILED            @"up_report_score_failed"
 
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
@@ -66,6 +79,10 @@
 #define DICT_ELEMENT_MESSAGE                    @"message"
 #define DICT_ELEMENT_CONTACTS                   @"contacts"
 #define DICT_ELEMENT_FEEDS                      @"feeds"
+#define DICT_ELEMENT_LEADERBOARDS               @"leaderboards"
+#define DICT_ELEMENT_LEADERBOARD                @"leaderboard"
+#define DICT_ELEMENT_SCORES                     @"scores"
+#define DICT_ELEMENT_SCORE                      @"score"
 #define DICT_ELEMENT_REQUEST_ID                 @"requestId"
 #define DICT_ELEMENT_INVITED_LIST               @"invitedIds"
 #define DICT_ELEMENT_REWARD                     @"reward"
@@ -301,5 +318,88 @@ Called when the service has been initializedt.
 + (void)postInviteFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message
              withPayload:(NSString *)payload;
 
+/**
+ Called when the get leaderboards process from a provider has started. Which fires the
+ `EVENT_UP_GET_LEADERBOARDS_STARTED` event.
+
+ @param provider The provider on which the get leaderboards process started
+ */
++(void)postGetLeaderboardsStarted:(Provider)provider withPayload:(NSString *)payload;
+
+/**
+ Called when the get leaderboards process from a provider has finished. Which fires the
+ `EVENT_UP_GET_LEADERBOARDS_FINISHED` event.
+
+ @param provider The provider on which the get leaderboards process finished
+ @param leaderboards an Array of leaderboards represented by specified provider
+ */
++(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards andPayload:(NSString *)payload;
+
+/**
+ Called when the get leaderboards process from a provider has failed. Which fires the
+ `EVENT_UP_GET_LEADERBOARDS_FAILED` event.
+
+ @param provider The provider on which the get leaderboards process has failed
+ @param message a Description of the reason for failure
+ */
++(void)postGetLeaderboardsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload;
+
+/**
+ Called when the get scores process from a provider has started. Which fires the
+ `EVENT_UP_GET_SCORES_STARTED` event.
+
+ @param provider The provider on which the get scores process started
+ @param leaderboard The leaderboard scores fetched from
+ */
++(void)postGetScoresStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withPayload:(NSString *)payload;
+
+/**
+ Called when the get scores process from a provider has finished. Which fires the
+ `EVENT_UP_GET_SCORES_FINISHED` event.
+
+ @param provider The provider on which the get scores process finished
+ @param leaderboard The leaderboard scores fetched from
+ @param scores an Array of scores represented by specified leaderboard
+ */
++(void)postGetScoresFinished:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withScoresList:(NSArray *)scores hasMore:(BOOL)hasMore andPayload:(NSString *)payload;
+
+/**
+ Called when the get scores process from a provider has failed. Which fires the
+ `EVENT_UP_GET_SCORES_FAILED` event.
+
+ @param provider The provider on which the get scores process has failed
+ @param leaderboard The leaderboard scores fetched from
+ @param message a Description of the reason for failure
+ */
++(void)postGetScoresFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload;
+
+/**
+ Called when the score reporting process from a provider has started. Which fires the
+ `EVENT_UP_REPORT_SCORE_STARTED` event.
+
+ @param provider The provider on which the get scores process started
+ @param leaderboard The leaderboard score reported to
+ */
++(void)postReportScoreStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload;
+
+/**
+ Called when the score reporting process from a provider has finished. Which fires the
+ `EVENT_UP_REPORT_SCORE_FINISHED` event.
+
+ @param provider The provider on which the get scores process finished
+ @param leaderboard The leaderboard score reported to
+ @param score A new score instance as a result of reporting
+ */
++(void)postReportScoreFinished:(Provider)provider score:(Score *)score forLeaderboard:(Leaderboard *)leaderboard andPayload:(NSString *)payload;
+
+/**
+ Called when the score reporting process from a provider has failed. Which fires the
+ `EVENT_UP_REPORT_SCORE_FAILED` event.
+
+ @param provider The provider on which the get scores process has failed
+ @param leaderboard The leaderboard score reported to
+ @param message a Description of the reason for failure
+ */
++(void)postReportScoreFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload;
 
 @end

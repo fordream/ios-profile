@@ -1,12 +1,12 @@
 /*
- Copyright (C) 2012-2014 Soomla Inc.
- 
+ Copyright (C) 2012-2015 Soomla Inc.
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,16 +14,20 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
-//#import <FacebookSDK/FacebookSDK.h>
 
-/**
- Main entry point to the application
- */
-@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+#import "Score+GameCenter.h"
+#import "SoomlaGameCenter.h"
 
+
+@implementation Score (GameCenter)
+
+-(instancetype)initWithGamecenterScore:(GKScore *)score {
+    if (self = [self init]) {
+        self.rank = @(score.rank);
+        self.player = [SoomlaGameCenter userProfileFromGameKitPlayer:score.player];
+        self.value = @(score.value);
+    }
+    return self;
 }
-
-@property (strong, nonatomic) UIWindow *window;
 
 @end

@@ -16,18 +16,13 @@
 
 #import "AppDelegate.h"
 #import "Soomla.h"
-#import "MuffinRushAssets.h"
-#import "SoomlaStore.h"
 #import "SoomlaProfile.h"
-#import "VirtualItemReward.h"
 #import "SoomlaUtils.h"
 #import "ViewController.h"
 #import "SoomlaConfig.h"
 #import "Schedule.h"
 
 @implementation AppDelegate
-
-@synthesize loginReward, updateStatusReward, uploadImageReward, likeReward;
 
 static NSString* TAG = @"SOOMLA AppDelegate";
 
@@ -36,15 +31,6 @@ static NSString* TAG = @"SOOMLA AppDelegate";
     DEBUG_LOG = YES;
     
     [Soomla initializeWithSecret:@"LukeSkywalker"];
-    
-    id<IStoreAssets> storeAssets = [[MuffinRushAssets alloc] init];
-    [[SoomlaStore getInstance] initializeWithStoreAssets:storeAssets];
-
-    self.loginReward = [[VirtualItemReward alloc] initWithRewardId:@"login_reward" andName:@"Login Reward" andAmount:100 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
-    self.updateStatusReward = [[VirtualItemReward alloc] initWithRewardId:@"update_status_reward" andName:@"Update Status Reward" andAmount:150 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
-    self.updateStatusReward.schedule = [Schedule AnyTimeUnlimited];
-    self.uploadImageReward = [[VirtualItemReward alloc] initWithRewardId:@"update_story_reward" andName:@"Update Story Reward" andAmount:250 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
-    self.likeReward = [[VirtualItemReward alloc] initWithRewardId:@"like_page_reward" andName:@"Like Page Reward" andAmount:350 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     
     // Override point for customization after application launch.
     return YES;

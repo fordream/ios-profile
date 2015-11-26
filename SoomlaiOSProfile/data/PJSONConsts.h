@@ -15,7 +15,6 @@
  */
 
 /** User Profile **/
-
 extern NSString *const UP_PROVIDER;
 extern NSString *const UP_PROFILEID;
 extern NSString *const UP_USERNAME;
@@ -28,3 +27,9 @@ extern NSString *const UP_GENDER;
 extern NSString *const UP_LANGUAGE;
 extern NSString *const UP_BIRTHDAY;
 extern NSString *const UP_EXTRA;
+
+extern NSString *const UP_IDENTIFIER;
+extern NSString *const UP_USER_PROFILE;
+extern NSString *const UP_LEADERBOARD;
+extern NSString *const UP_SCORE_VALUE;
+extern NSString *const UP_SCORE_RANK;

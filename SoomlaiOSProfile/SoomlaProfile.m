@@ -23,6 +23,9 @@
 #import "UserProfileNotFoundException.h"
 #import "UserProfileStorage.h"
 #import "SoomlaUtils.h"
+#import "GameServicesController.h"
+#import "Leaderboard.h"
+#import "ProviderNotFoundException.h"
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
@@ -71,10 +74,12 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     if (UsingExternalProvider) {
         authController = [[AuthController alloc] initWithoutLoadingProviders];
         socialController = [[SocialController alloc] initWithoutLoadingProviders];
+        gameServicesController = [[GameServicesController alloc] initWithoutLoadingProviders];
     }
     else {
         authController = [[AuthController alloc] initWithParameters:customParams];
         socialController = [[SocialController alloc] initWithParameters:customParams];
+        gameServicesController = [[GameServicesController alloc] initWithParameters:customParams];
     }
 
     self.initialized = YES;
@@ -83,6 +88,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 
     [authController settleAutoLogin];
     [socialController settleAutoLogin];
+    [gameServicesController settleAutoLogin];
 
     return YES;
 }
@@ -96,25 +102,29 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 }
 
 - (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    @try {
-        [authController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
-    }
-    @catch (NSException *exception) {
+    for (AuthController *controller in @[authController, socialController, gameServicesController]) {
+        @try {
+            [controller loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+            return;
+        }
+        @catch (ProviderNotFoundException *exception) {
 
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        [socialController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+        }
     }
+    @throw [[ProviderNotFoundException alloc] initWithProvider:provider];
 }
 
 - (void)logoutWithProvider:(Provider)provider {
-    @try {
-        [authController logoutWithProvider:provider];
-    }
-    @catch (NSException *exception) {
+    for (AuthController *controller in @[authController, socialController, gameServicesController]) {
+        @try {
+            [controller logoutWithProvider:provider];
+            return;
+        }
+        @catch (ProviderNotFoundException *exception) {
 
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        [socialController logoutWithProvider:provider];
+        }
     }
+    @throw [[ProviderNotFoundException alloc] initWithProvider:provider];
 }
 
 - (void)logoutFromAllProviders {
@@ -122,33 +132,34 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     for(NSNumber* providerNum in providers) {
         @try {
             [self logoutWithProvider:(Provider)[providerNum intValue]];
-        }@catch (NSException *exception) {
+        }@catch (ProviderNotFoundException *exception) {
             // Skip
         }
     }
 }
 
 - (BOOL)isLoggedInWithProvider:(Provider)provider {
-    @try {
-        return [authController isLoggedInWithProvider:provider];
-    }
-    @catch (NSException *exception) {
+    for (AuthController *controller in @[authController, socialController, gameServicesController]) {
+        @try {
+            return [controller isLoggedInWithProvider:provider];
+        }
+        @catch (ProviderNotFoundException *exception) {
 
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        return [socialController isLoggedInWithProvider:provider];
+        }
     }
-
+    @throw [[ProviderNotFoundException alloc] initWithProvider:provider];
 }
 
 - (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider {
-    @try {
-        return [authController getStoredUserProfileWithProvider:provider];
-    }
-    @catch (NSException *exception) {
+    for (AuthController *controller in @[authController, socialController, gameServicesController]) {
+        @try {
+            [controller getStoredUserProfileWithProvider:provider];
+        }
+        @catch (ProviderNotFoundException *exception) {
 
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        return [socialController getStoredUserProfileWithProvider:provider];
+        }
     }
+    @throw [[ProviderNotFoundException alloc] initWithProvider:provider];
 }
 
 - (NSArray *)getStoredUserProfiles {
@@ -329,11 +340,16 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 }
 
 - (void)getContactsWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController getContactsWith:provider andFromStart:false andPayload:payload andReward:reward];
+    [self getContactsWithProvider:provider andFromStart:false andPayload:payload andReward:reward];
 }
 
-- (void)getContactsWithProvider:(Provider)provider andFromStart: (bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
+- (void)getContactsWithProvider:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
+    @try {
+        [socialController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
+    }
+    @catch (ProviderNotFoundException *exception) {
+        [gameServicesController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
+    }
 }
 
 - (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward {
@@ -400,6 +416,22 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         activityVC.popoverPresentationController.sourceView = rootViewController.view;
     }
     [rootViewController presentViewController:activityVC animated:YES completion:nil];
+}
+
+- (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController getLeaderboardsWithProvider:provider payload:payload andReward:reward];
+}
+
+- (void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward {
+    [self getScoresWithProvider:provider forLeaderboard:leaderboard fromStart:NO payload:payload andReward:reward];
+}
+
+- (void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController getScoresWithProvider:provider forLeaderboard:leaderboard andFromStart:fromStart payload:payload andReward:reward];
+}
+
+- (void)reportScoreWithProvider:(Provider)provider score:(NSNumber *)score forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController reportScoreWithProvider:provider score:score forLeaderboard:leaderboard payload:payload andReward:reward];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
