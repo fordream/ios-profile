@@ -29,4 +29,8 @@
 @property (nonatomic, strong) UserProfile *player;
 @property (nonatomic, strong) NSNumber *value;
 
+-(instancetype)initWithDictionary:(NSDictionary *)dict;
+
+-(NSDictionary *)toDictionary;
+
 @end
